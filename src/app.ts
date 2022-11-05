@@ -42,7 +42,7 @@ app.get("/loginXss", function (req, res) {
 });
 
 app.get("/loginBroken", function (req, res) {
-  res.render("loginXss");
+  res.render("loginBroken");
 });
 
 app.get("/xss", function (req, res) {
