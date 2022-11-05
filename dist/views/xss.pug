@@ -1,0 +1,47 @@
+html
+    head
+        title web2 security
+        script(type='text/javascript').
+            function setSecurityOn() {
+                document.getElementById("hiddenSecurityId").value = "true";
+                document.getElementById("secNo").checked = false;
+            }
+            function setSecurityOff() {
+                document.getElementById("hiddenSecurityId").value = "false";
+                document.getElementById("secYes").checked = false;
+            }
+        style(type="text/css").
+            body {
+            text-align: center;
+            }
+    body
+        h1 2. projekt - sigurnost
+        h2 pohranjeni xss
+        a(href="/") Povratak na početnu stranicu
+        br
+        if !username
+            p Prijavite se kako biste mogli isprobati ranjivost aplikacije putem pohranjenog xss-a
+            a(href="/loginXss") Prijava
+        else
+            h2 Bok #{username}
+            br
+            label(for="withSecurity")
+                p S uključenom zaštitom
+                input(id="secYes" type="checkbox", name="withSecurity" onclick='setSecurityOn()' checked)
+            label(for="noSecurity")
+                p Bez uključene zaštite
+                input(id="secNo" type="checkbox", name="noSecurity" onclick='setSecurityOff()')
+            p Upute:
+            p Ukoliko ste izabrali opciju bez uključene zaštite, dodavanjem komentara kroz input neće se provjeriti sadržaj unosa
+            p Možete unijeti npr. "script alert(document.cookie) script"
+            p Ukoliko je odabrbana opcija s uključenom zaštitom, provodi se "dezinfekcija" unosa
+            form(id="input" action="/input" method="get")
+                input(type="text", name="text", value="", placeholder="Komentar")
+                br
+                input(id="hiddenSecurityId" type="hidden", name="security", value="true")
+                input(type="submit" value="Dodajte komentar")
+                if text
+                    p Vaš komentar:
+                    #{text}
+                if retText
+                    p Vaš "dezinficirani" komentar: #{retText}

@@ -1,0 +1,42 @@
+html
+    head
+        title web2 security
+        script(type='text/javascript').
+            function setSecurityOnBroken() {
+                document.getElementById("hiddenSecurityIdBroken").value = "true";
+                document.getElementById("secNoBroken").checked = false;
+            }
+            function setSecurityOffBroken() {
+                document.getElementById("hiddenSecurityIdBroken").value = "false";
+                document.getElementById("secYesBroken").checked = false;
+            }
+        style(type="text/css").
+            body {
+            text-align: center;
+            }
+    body
+        h3 Stranica za prijavu - broken Authentication
+        p Upute
+        ol
+            li: p Unesite proizvoljno korisničko ime i lozinku
+            li: p Pritisnite "Prijavite se"
+            li: p Nakon prijave, Vaši se podaci spremaju u cookie i preusmjeravate se na broken authentication stranicu
+            li: p Ukoliko ste izabrali opciju bez uključene zaštite, sessionId koji se kreira neće imati httponly zastavicu
+            li: p čime ga se može ukrasti. Ukoliko odaberete opciju sa zaštitom, cookie će biti postavljen sa zastavicom
+            li: p te ga se neće moći dohvatiti javascriptom
+        label(for="withSecurityBroken")
+            p S uključenom zaštitom
+            input(id="secYesBroken" type="checkbox", name="withSecurityBroken" onclick='setSecurityOnBroken()' checked)
+        label(for="noSecurityBroken")
+            p Bez uključene zaštite
+            input(id="secNoBroken" type="checkbox", name="noSecurityBroken" onclick='setSecurityOffBroken()')
+        br
+        form(id="loginBroken" action="/broken" method="get")
+            input(type="text", name="username", value="", placeholder="Korisničko ime")
+            br
+            input(type="password", name="password", value="", placeholder="Lozinka")
+            br
+            input(id="hiddenSecurityIdBroken" type="hidden", name="security", value="true")
+            br
+            input(type="submit" value="Prijavite se")
+

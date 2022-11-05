@@ -1,0 +1,20 @@
+//- html
+//-     head
+//-         title web2 lab
+//-     body
+//-         h1 Bok #{username}, ovo je stranica na kojoj možete pregledati tablicu
+//-         ul
+//-             li: a(href='/', title='index') Početna stranica
+//-             li: a(href='/games', title='games') Utakmice
+
+//-         table(style='width:100%', border='1')
+//-                 tr
+//-                     th Br.
+//-                     th Ime ekipe
+//-                     th Broj bodova
+//-                     th Gol razlika
+//-                 each val, index in table
+//-                     tr(class="row")
+//-                         td #{index+1}
+//-                         each val2, key in val
+//-                             td #{val2}

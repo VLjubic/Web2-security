@@ -1,0 +1,26 @@
+html
+    head
+        title web2 security
+        script(type='text/javascript').
+            function simulate() {
+                alert(document.cookie);
+            }
+        style(type="text/css").
+            body {
+            text-align: center;
+            }
+    body
+        h1 2. projekt - sigurnost
+        h2 Broken authentication
+        a(href="/") Povratak na početnu stranicu
+        br
+        if !username
+            p Prijavite se kako biste mogli isprobati ranjivost aplikacije putem pohranjenog xss-a
+            a(href="/loginBroken") Prijava
+        else
+            h2 Bok #{username}
+            br
+            p Upute:
+            p Klikom na gumb "Simulacija" simuliramo napad gdje je, u nesigurnoj verziji, sessionID cookie spremljen
+            p bez httponly zastavice čime ga napadač može ukrasti
+            button(onclick="simulate();") Simulacija

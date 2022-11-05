@@ -1,0 +1,22 @@
+html
+    head
+        title web2 security
+        style(type="text/css").
+            body {
+            text-align: center;
+            }
+    body
+        h3 Stranica za prijavu
+        p Upute
+        ol
+            li: p Unesite proizvoljno korisničko ime i lozinku
+            li: p Pritisnite "Prijavite se"
+            li: p Nakon prijave, Vaši se podaci spremaju u cookie i preusmjeravate se na početnu stranicu
+            li: p Na početnoj stranici možete isprobati dvije vrste ranjivosti
+        form(id="login" action="/index" method="post")
+            input(type="text", name="username", value="", placeholder="Korisničko ime")
+            br
+            input(type="password", name="password", value="", placeholder="Lozinka")
+            br
+            input(type="submit" value="Prijavite se")
+

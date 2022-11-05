@@ -1,0 +1,47 @@
+//- title web2 lab
+//-     script(src="https://code.jquery.com/jquery-3.6.1.min.js", crossorigin="anonymous")
+//-     script(type='text/javascript').
+//-         function viewComment(index) {
+//-             let row = document.getElementsByClassName("commentRow")[index];
+//-             let element = row.childNodes[0];
+//-             let gameId = element.innerText;
+
+//-             $.post( "/getComments", { gameId: gameId}, function( data ) {
+//-                 document.getElementById("commentsContainer").innerHTML = data;
+//-             });
+//-         }
+
+//-     style(type="text/css").
+//-         #addComment {
+//-         display: none;
+//-         justify-content: center;
+//-         }
+//- table(style='width:100%', border='1')
+//-     tr
+//-         th Id komentara
+//-         th Id utakmice
+//-         th Komentar
+//-         th Id korisnika
+//-         th Komentar kreiran
+//-         th Komentar uređen
+//-         if username && !admin
+//-             th Uredi komentar
+//-             th Obriši komentar
+//-         if admin
+//-             th Obriši admin
+//-     each val, index2 in comments
+//-         tr(class="commentRow")
+//-             each val2, key in val
+//-                 if key==='id'
+//-                     td(class="idValue") #{val2}
+//-                 if key!=='id'
+//-                     td #{val2}
+//-             if username
+//-                 if !admin
+//-                     each val4, key4 in val
+//-                         if key4==='userId'
+//-                             if val4=== email
+//-                                 td: button(type='button' class='EditComment' onclick='Edit('+index2+')') Uređivanje
+//-                                 td: button(type='button' class='deleteComment' onclick='Delete('+index2+')') Brisanje
+//-                 if admin
+//-                     td: button(type='button' class='deleteCommentAdmin' onclick='Delete('+index2+')') Brisanje admin

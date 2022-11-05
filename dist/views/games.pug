@@ -1,0 +1,128 @@
+//- html
+//-     head
+//-         title web2 lab
+//-         script(src="https://code.jquery.com/jquery-3.6.1.min.js", crossorigin="anonymous")
+//-         script(type='text/javascript').
+//-             function openCommentSection(index) {
+//-                 let row = document.getElementsByClassName("row")[index];
+//-                 let element = row.childNodes[0];
+//-                 let gameId = element.innerText;
+//-                 document.getElementById("gameIdInput").value = parseInt(gameId);
+
+//-                 document.getElementById("addComment").style.display = "flex";
+//-             }
+
+//-             function openEditScore(index) {
+//-                 let row = document.getElementsByClassName("row")[index];
+//-                 let element = row.childNodes[0];
+//-                 let gameId = element.innerText;
+//-                 let homeTeamName = element.childNodes[2];
+//-                 let awayTeamName = element.childNodes[3];
+
+//-                 document.getElementById("gameIdEditScoreInput").value = parseInt(gameId);
+//-                 document.getElementById("homeTeamEdit").value = homeTeamName;
+//-                 document.getElementById("awayTeamEdit").value = awayTeamName;
+
+//-                 document.getElementById("editScores").style.display = "flex";
+//-             }
+
+//-             function viewComment(index) {
+//-                 let row = document.getElementsByClassName("row")[index];
+//-                 let element = row.childNodes[0];
+//-                 let gameId = element.innerText;
+
+//-                 $.post( "/getComments", { gameId: gameId}, function( data ) {
+//-                     document.getElementById("commentsContainer").innerHTML = data;
+//-                 });
+//-             }
+
+//-             function Edit(index) {
+//-                 let row = document.getElementsByClassName("commentRow")[index];
+//-                 let element = row.childNodes[0];
+//-                 let commentId = element.innerText;
+//-                 document.getElementById("commentId").value = commentId;
+//-                 document.getElementById("editComments").style.display = "flex";
+//-             }
+
+//-             function Delete(index) {
+//-                 let row = document.getElementsByClassName("commentRow")[index];
+//-                 let element = row.childNodes[0];
+//-                 let commentId = element.innerText;
+
+//-                 $.post( "/games/deleteComments", { commentId: commentId}, function( data ) {
+//-                     document.getElementById("commentsContainer").innerHTML = data;
+//-                 });
+//-             }
+
+//-         style(type="text/css").
+//-             #addComment, #editComments, #editScores {
+//-             display: none;
+//-             justify-content: center;
+//-             }
+
+//-     body
+//-         if username && !admin
+//-             h2 Bok #{username}, dobrodošli na stranicu s utakmicama. Možete dodavati, uređivati i brisati svoje komentare
+//-         if admin
+//-             h2 Bok #{username} dobrodošli na stranicu s utakmicama. Pregledajte komentare te ih po potrebi obrišite
+//-             h3: a(href="/logout") Odjava
+//-         if !username
+//-             h1 Bok, kao neprijavljeni korisnik možete pregledavati raspored i rezultate po kolima
+//-         ul
+//-             li: a(href='/', title='Index') Početna stranica
+//-             li: a(href='/table', title='games') Tablica
+//-         if games
+//-             table(style='width:100%', border='1')
+//-                 tr
+//-                     th Id utakmice
+//-                     th Kolo
+//-                     th Domaćin
+//-                     th Gost
+//-                     th Rezultat domaćin
+//-                     th Rezultat gost
+//-                     if username
+//-                         if !admin
+//-                             th Dodajte komentar
+//-                         th Pregledajte komentare
+//-                     if username && admin
+//-                         th Promijenite rezultat
+//-                 each val, index in games
+//-                     tr(class="row")
+//-                         each val2, key in val
+//-                             if key==='id'
+//-                                 td(class="idValue") #{val2}
+//-                             if key!=='id'
+//-                                 td #{val2}
+//-                         if username
+//-                             if !admin
+//-                                 td: button(type='button' class='addComment' onclick='openCommentSection('+ index + ')') Dodavanje
+//-                             td: button(type='button' class='viewComment' onclick='viewComment('+ index + ')') Pregledavanje
+//-                         if username && admin
+//-                             td: button(type='button' class='editScore' onclick='openEditScore('+ index + ')') Ažuriranje
+//-             form(id="addComment" action="/games/addComment" method="post")
+//-                 input(type="text", name="text", value="", placeholder="Komentar")
+//-                 br
+//-                 input(type="hidden", name="userId", value=username, placeholder="username")
+//-                 br
+//-                 input(type="hidden", name="gameId", value="", placeholder="username" id="gameIdInput")
+//-                 br
+//-                 input(type="submit" value="Komentirajte")
+//-             div(id="commentsContainer")
+//-             div(id="editComments")
+//-                 form(id="editComment" action="/games/editComment" method="post")
+//-                     input(type="text", name="text", value="", placeholder="Uređeni komentar")
+//-                     br
+//-                     input(type="hidden", id="commentId", name="commentId" value="" placeholder="commentId")
+//-                     br
+//-                     input(type="submit" value="Uredite")
+//-             div(id="editScores")
+//-                 form(id="editScore" action="/games/editScore" method="post")
+//-                     input(type="text", name="homeResult", value="", placeholder="Rezultat domaće ekipe")
+//-                     br
+//-                     input(type="text", name="awayResult", value="", placeholder="Rezultat gostujuće ekipe")
+//-                     br
+//-                     input(type="hidden", id="gameIdEditScoreInput", name="gameId" value="" placeholder="gameId")
+//-                     input(type="hidden", id="homeTeamEdit", name="homeTeam" value="" placeholder="homeTeam")
+//-                     input(type="hidden", id="awayTeamEdit", name="awayTeam" value="" placeholder="awayTeam")
+//-                     br
+//-                     input(type="submit" value="Uredite")
